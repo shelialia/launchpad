@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
 import uuid
 from enum import Enum
+from beanie import Document, init_beanie
 
 
 class QueryRoleType(str, Enum):
@@ -22,7 +23,7 @@ class Prompt(BaseModel):
     content: str = Field(..., description="Message content")
 
 
-class Conversation(BaseModel):
+class Conversation(Document):
     """Represents a series of interactions with an LLM."""
 
     id: str = Field(
@@ -34,6 +35,9 @@ class Conversation(BaseModel):
     )
     tokens: int = Field(
         0, ge=0, description="Total number of tokens used in the conversation"
+    )
+    messages: list[Prompt] = Field(
+        default_factory=list, description="List of chat messages"
     )
 
 
