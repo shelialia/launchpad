@@ -30,3 +30,15 @@ async def get_conversation(conversation_id: str):
     except Exception as e:
         raise InternalServerError()
 
+@router.delete("/{conversation_id}", response_model=DeletedResponse)
+async def delete_conversation(conversation_id: str):
+    """Deletes a conversation by ID."""
+    try:
+        conversation = await Conversation.get(conversation_id)
+        if not conversation:
+            raise NotFoundError()
+
+        await conversation.delete()
+        return conversation
+    except Exception as e:
+        raise InternalServerError()
