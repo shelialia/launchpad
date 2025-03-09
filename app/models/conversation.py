@@ -1,12 +1,24 @@
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
 import uuid
+from enum import Enum
+
+
+class QueryRoleType(str, Enum):
+    """Chat roles for each individual message."""
+
+    SYSTEM = "system"  # Message is a system message
+    USER = "user"  # Message is a prompt from the user
+    ASSISTANT = "assistant"  # Message is a reply from the LLM model
+    FUNCTION = "function"  # Message is a function call message
 
 
 class Prompt(BaseModel):
     """Represents a single message in a conversation."""
 
-    role: str = Field(..., description="Chat roles: system, user, assistant, function")
+    role: QueryRoleType = Field(
+        ..., description="Chat roles: system, user, assistant, function"
+    )
     content: str = Field(..., description="Message content")
 
 
