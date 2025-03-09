@@ -1,9 +1,16 @@
 from fastapi import FastAPI, Response, HTTPException, status
-from datetime import datetime
+from app.config.database import init_db
+from app.routes import conversations, llm
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World", "time": str(datetime.now())}
+@app.on_event("startup")
+async def startup_event():
+    await init_db()
+
+
+app.include_router(
+    conversations.router, prefix="/conversations", tags=["Conversations"]
+)
+app.include_router(llm.router, prefix="/chat", tags=["LLM Interaction"])
