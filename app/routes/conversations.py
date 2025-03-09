@@ -21,3 +21,12 @@ async def create_conversation(conversation_post: ConversationPOST):
     except Exception as e:
         raise InternalServerError()
 
+
+@router.get("/{conversation_id}", response_model=Conversation)
+async def get_conversation(conversation_id: str):
+    try:
+        conversation = await Conversation.get(conversation_id)
+        return conversation
+    except Exception as e:
+        raise InternalServerError()
+
