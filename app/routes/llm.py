@@ -2,7 +2,6 @@ from fastapi import APIRouter, status
 from app.services.llm_service import send_prompt
 from app.models.conversation import Prompt
 from app.models.exceptions import InternalServerError
-from app.models.parameters import IDParam
 from app.models.responses import CreatedResponse
 
 router = APIRouter()
