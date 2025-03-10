@@ -3,7 +3,7 @@ from typing import List, Dict, Optional
 import uuid
 from enum import Enum
 from beanie import Document, init_beanie
-from app.models.responses import InvalidParametersError
+from app.models.exceptions import InvalidParametersError
 
 
 class QueryRoleType(str, Enum):

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.services.llm_service import send_prompt
 from app.models.conversation import Prompt
-from app.models.responses import InternalServerError
+from app.models.exceptions import InternalServerError
 
 router = APIRouter()
 
