@@ -13,4 +13,4 @@ async def startup_event():
 app.include_router(
     conversations.router, prefix="/conversations", tags=["Conversations"]
 )
-app.include_router(llm.router, prefix="/chat", tags=["LLM Interaction"])
+app.include_router(llm.router, prefix="/queries", tags=["LLM Interaction"])
