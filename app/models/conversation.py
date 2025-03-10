@@ -1,8 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Dict, Optional
 import uuid
 from enum import Enum
 from beanie import Document, init_beanie
+from app.models.responses import InvalidParametersError
 
 
 class QueryRoleType(str, Enum):
@@ -57,6 +58,18 @@ class ConversationPOST(BaseModel):
     params: Dict[str, str] = Field(
         default_factory=dict, description="Custom parameters for the AI model"
     )
+
+    @field_validator("params")
+    def validate_params(cls, value):
+        """Ensure only valid OpenAI parameters are passed."""
+        allowed_params = {"temperature", "max_tokens", "top_p"}
+
+        if value:
+            for param in value:
+                if param not in allowed_params:
+                    raise InvalidParametersError(details={"invalid_param": param})
+
+        return value
 
 
 class ConversationPUT(BaseModel):

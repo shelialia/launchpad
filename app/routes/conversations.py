@@ -5,13 +5,18 @@ from app.models.responses import (
     InternalServerError,
     NotFoundError,
     DeletedResponse,
+    UpdatedResponse
 )
+from typing import List
 
 router = APIRouter()
 
 
 @router.post("/", response_model=CreatedResponse, status_code=status.HTTP_201_CREATED)
 async def create_conversation(conversation_post: ConversationPOST):
+    """
+    Create a new conversation with an LLM model.
+    """
     conversation = Conversation(
         name=conversation_post.name, params=conversation_post.params
     )
@@ -22,13 +27,40 @@ async def create_conversation(conversation_post: ConversationPOST):
         raise InternalServerError()
 
 
-@router.get("/{conversation_id}", response_model=Conversation)
-async def get_conversation(conversation_id: str):
+@router.get("/", response_model=List[Conversation])
+async def get_conversations():
     try:
-        conversation = await Conversation.get(conversation_id)
-        return conversation
+        conversations = await Conversation.find_all().to_list(length=None)
+        return conversations
     except Exception as e:
         raise InternalServerError()
+
+
+@router.put("/{conversation_id}", response_model=UpdatedResponse)
+async def update_conversation(conversation_id: str, conversation_put: ConversationPUT):
+    """
+    Updates an existing conversation by modifying its name and/or parameters.
+    """
+    try:
+        # Fetch the existing conversation
+        conversation = await Conversation.get(conversation_id)
+        if not conversation:
+            raise NotFoundError()
+
+        # Update fields only if they are provided
+        if conversation_put.name:
+            conversation.name = conversation_put.name
+        if conversation_put.params:
+            conversation.params.update(
+                conversation_put.params
+            )  # Merge new params with existing
+
+        await conversation.save()
+        return conversation
+
+    except Exception as e:
+        raise InternalServerError()
+
 
 @router.delete("/{conversation_id}", response_model=DeletedResponse)
 async def delete_conversation(conversation_id: str):
