@@ -4,7 +4,7 @@ from app.services.llm_service import send_prompt
 router = APIRouter()
 
 
-@router.post("/{conversation_id}")
+@router.post("/")
 async def chat_with_llm(conversation_id: str, prompt: str):
     try:
         response = await send_prompt(conversation_id, prompt)
