@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, field_validator
 from typing import List, Dict, Optional
 import uuid
 from enum import Enum
-from beanie import Document, init_beanie
+from beanie import Document
 from app.models.exceptions import InvalidParametersError
 
 
