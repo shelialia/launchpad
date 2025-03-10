@@ -12,6 +12,6 @@ router = APIRouter()
 async def chat_with_llm(conversation_id: str, prompt: Prompt):
     try:
         response = await send_prompt(conversation_id, prompt.content)
-        return {"response": response}
+        return {"message": response}
     except Exception as e:
         raise InternalServerError()

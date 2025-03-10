@@ -4,9 +4,9 @@ from fastapi import HTTPException, status
 
 
 class CreatedResponse(BaseModel):
-    """Response for successfully created resource with an ID."""
+    """Response returned by OpenAI API model."""
 
-    id: str = Field(..., format="uuid", description="Unique ID of the created resource")
+    message: str = Field(..., description="Successful message")
 
 
 class UpdatedResponse(BaseModel):
@@ -23,4 +23,3 @@ class DeletedResponse(BaseModel):
     message: str = Field(
         "Successfully deleted resource", description="Confirmation message"
     )
-    

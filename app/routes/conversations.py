@@ -35,7 +35,6 @@ async def create_conversation(conversation_post: ConversationPOST):
 async def get_conversations():
     try:
         conversations = await Conversation.find_all().to_list(length=None)
-        print(conversations)
         return conversations
     except Exception as e:
         raise InternalServerError()
@@ -61,6 +60,8 @@ async def update_conversation(conversation_id: str, conversation_put: Conversati
             )  # Merge new params with existing
 
         await conversation.save()
+        updated_conversation = await Conversation.get(conversation_id)
+        return updated_conversation 
 
     except Exception as e:
         raise InternalServerError()
@@ -81,7 +82,7 @@ async def get_conversation(conversation_id: str):
         if not conversation:
             raise NotFoundError()
 
-        return conversation.messages
+        return conversation
     except Exception as e:
         raise InternalServerError()
 
@@ -94,6 +95,7 @@ async def delete_conversation(conversation_id: str):
             raise NotFoundError()
 
         await conversation.delete()
+        return conversation
 
     except Exception as e:
         raise InternalServerError()
