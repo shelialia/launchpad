@@ -84,7 +84,8 @@ You can test the endpoints here. Enter the request body and view the response bo
 
 ## **📌 API Endpoints**
 The endpoints were created based off the openai.yaml file provided by the team.
-**1️⃣ Create a Conversation**
+
+### **1️⃣ Create a Conversation**
 ```http
 POST /conversations/
 ```
@@ -92,7 +93,9 @@ Example Request Body:
 ```json
 {
   "name": "My Conversation",
-  "params": {"temperature": 0.7}
+  "params": {
+    "temperature": 0.7
+  }
 }
 ```
 Example Response:
@@ -102,8 +105,9 @@ Example Response:
   "name": "My Conversation",
   "params": {"temperature": 0.7}
 }
+```
 
-**2️⃣ Get All Conversations**
+### **2️⃣ Get All Conversations**
 ```http
 GET /conversations/
 ```
@@ -126,7 +130,7 @@ Example Response:
   }
 ]
 ```
-**3️⃣ Get a Specific Conversation**
+### **3️⃣ Get a Specific Conversation**
 ```http
 GET /conversations/{conversation_id}
 ```
@@ -156,7 +160,7 @@ Error Response:
   }
 }
 ```
-**4️⃣ Update a Conversation**
+### **4️⃣ Update a Conversation**
 ```http
 PUT /conversations/{conversation_id}
 ```
@@ -181,7 +185,7 @@ Example Response:
   }
 }
 ```
-**5️⃣ Delete a Conversation**
+### **5️⃣ Delete a Conversation**
 ```http
 DELETE /conversations/{conversation_id}
 ```
@@ -202,7 +206,7 @@ Example Response:
   "message": "I'm doing well, thank you!"
 }
 ```
-##📌 **Stopping & Managing Containers**
+## **📌 Stopping & Managing Containers**
 Stop the running contaainers
 ```bash
 docker-compose down
