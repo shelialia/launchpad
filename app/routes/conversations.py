@@ -35,12 +35,13 @@ async def create_conversation(conversation_post: ConversationPOST):
 async def get_conversations():
     try:
         conversations = await Conversation.find_all().to_list(length=None)
+        print(conversations)
         return conversations
     except Exception as e:
         raise InternalServerError()
 
 
-@router.put("/{conversation_id}", response_model=UpdatedResponse, status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/{conversation_id}", response_model=UpdatedResponse)
 async def update_conversation(conversation_id: str, conversation_put: ConversationPUT):
     """
     Updates an existing conversation by modifying its name and/or parameters.
@@ -60,7 +61,6 @@ async def update_conversation(conversation_id: str, conversation_put: Conversati
             )  # Merge new params with existing
 
         await conversation.save()
-        return conversation
 
     except Exception as e:
         raise InternalServerError()
@@ -85,7 +85,7 @@ async def get_conversation(conversation_id: str):
     except Exception as e:
         raise InternalServerError()
 
-@router.delete("/{conversation_id}", response_model=DeletedResponse, status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{conversation_id}", response_model=DeletedResponse)
 async def delete_conversation(conversation_id: str):
     """Deletes a conversation by ID."""
     try:
@@ -94,6 +94,6 @@ async def delete_conversation(conversation_id: str):
             raise NotFoundError()
 
         await conversation.delete()
-        return conversation
+
     except Exception as e:
         raise InternalServerError()

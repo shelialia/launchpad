@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/{conversation_id}", response_model=CreatedResponse, status_code=status.HTTP_201_CREATED) 
-async def chat_with_llm(conversation_id: IDParam, prompt: Prompt):
+async def chat_with_llm(conversation_id: str, prompt: Prompt):
     try:
         response = await send_prompt(conversation_id, prompt.content)
         return {"response": response}
