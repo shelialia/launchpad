@@ -2,7 +2,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from app.models.conversation import Conversation
-from app.models.conversation import Prompt, QueryRoleType  # Use defined models
+from app.models.conversation import Prompt, QueryRoleType
 from app.models.exceptions import NotFoundError, InvalidCreationError
 
 load_dotenv()

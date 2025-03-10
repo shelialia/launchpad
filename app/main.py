@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, HTTPException, status
+from fastapi import FastAPI
 from app.config.database import init_db
 from app.routes import conversations, llm
 
