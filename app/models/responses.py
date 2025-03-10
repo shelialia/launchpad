@@ -56,5 +56,5 @@ class InvalidCreationError(APIError):
 class InternalServerError(APIError):
     """Error response for server issues (500 Internal Server Error)."""
 
-    def __init__():
+    def __init__(detail: str):
         super().__init__(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")

@@ -1,13 +1,15 @@
 from fastapi import APIRouter, HTTPException
 from app.services.llm_service import send_prompt
+from app.models.conversation import Prompt
+from app.models.responses import InternalServerError
 
 router = APIRouter()
 
 
-@router.post("/")
-async def chat_with_llm(conversation_id: str, prompt: str):
+@router.post("/{conversation_id}")
+async def chat_with_llm(conversation_id: int, prompt: Prompt):
     try:
-        response = await send_prompt(conversation_id, prompt)
+        response = await send_prompt(conversation_id, prompt.content)
         return {"response": response}
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise InternalServerError()

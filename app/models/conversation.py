@@ -23,6 +23,26 @@ class Prompt(BaseModel):
     )
     content: str = Field(..., description="Message content")
 
+    @field_validator("role")
+    def validate_params(cls, value):
+        """Ensure only valid OpenAI parameters are passed."""
+        allowed_params = {"user"}
+
+        if value:
+            for param in value:
+                if param not in allowed_params:
+                    raise InvalidParametersError(details={"invalid_param": param})
+
+        return value
+
+    @field_validator("content")
+    def validate_params(cls, value):
+        """Ensure only valid OpenAI parameters are passed."""
+        if not value:
+            raise InvalidParametersError(details={"invalid_param": value})
+
+        return value
+
 
 class Conversation(Document):
     """Represents a series of interactions with an LLM."""
