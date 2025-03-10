@@ -222,14 +222,15 @@ docker-compose up -d
 /your-repo
 │── /app                 # FastAPI source code
 │   ├── main.py          # FastAPI entry point
-│   ├── models/          # Database models
-│   ├── routes/          # API endpoints
-│   ├── database.py      # MongoDB connection
-│── /data                # MongoDB data (persisted in Docker volume)
+│   ├── models/          # Pydantic models
+│   ├── routes/          # FastAPI endpoints
+│   ├── config/          # MongoDB connection
 │── Dockerfile           # FastAPI Docker setup
 │── docker-compose.yml   # Docker Compose for MongoDB + FastAPI
 │── requirements.txt     # Python dependencies
 │── .env                 # Environment variables
+|── .env.example         # Example of .env file
+|── .gitignore           # Contains untracked file names
 │── README.md            # This file
 ```
 ## **📌 Troubleshooting**
