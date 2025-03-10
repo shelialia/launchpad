@@ -2,11 +2,10 @@ from fastapi import APIRouter, status
 from app.models.conversation import Conversation, ConversationPOST, ConversationPUT, ConversationFull
 from app.models.responses import (
     CreatedResponse,
-    InternalServerError,
-    NotFoundError,
     DeletedResponse,
     UpdatedResponse
 )
+from app.models.exceptions import InternalServerError, NotFoundError
 from typing import List
 
 router = APIRouter()
