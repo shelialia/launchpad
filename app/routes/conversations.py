@@ -27,7 +27,12 @@ async def create_conversation(conversation_post: ConversationPOST):
         raise InternalServerError()
 
 
-@router.get("/", response_model=List[Conversation])
+@router.get(
+    "/",
+    response_model=List[Conversation],
+    status_code=status.HTTP_200_OK,
+    responses={201: {"description": "Successfully retrieved a list of Conversations"}},
+)
 async def get_conversations():
     try:
         conversations = await Conversation.find_all().to_list(length=None)
@@ -36,7 +41,7 @@ async def get_conversations():
         raise InternalServerError()
 
 
-@router.put("/{conversation_id}", response_model=UpdatedResponse)
+@router.put("/{conversation_id}", response_model=UpdatedResponse, status_code=status.HTTP_204_NO_CONTENT)
 async def update_conversation(conversation_id: str, conversation_put: ConversationPUT):
     """
     Updates an existing conversation by modifying its name and/or parameters.
@@ -62,7 +67,12 @@ async def update_conversation(conversation_id: str, conversation_put: Conversati
         raise InternalServerError()
 
 
-@router.get("/{conversation_id}", response_model=ConversationFull)
+@router.get(
+    "/{conversation_id}",
+    response_model=ConversationFull,
+    status_code=status.HTTP_200_OK,
+    responses={200: {"description": "Successfully retrieved a Conversation"}},
+)
 async def get_conversation(conversation_id: str):
     """
     Retrieve a conversation by ID.
@@ -76,7 +86,7 @@ async def get_conversation(conversation_id: str):
     except Exception as e:
         raise InternalServerError()
 
-@router.delete("/{conversation_id}", response_model=DeletedResponse)
+@router.delete("/{conversation_id}", response_model=DeletedResponse, status_code=status.HTTP_204_NO_CONTENT)
 async def delete_conversation(conversation_id: str):
     """Deletes a conversation by ID."""
     try:
