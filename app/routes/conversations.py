@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from app.models.conversation import Conversation, ConversationPOST, ConversationPUT
+from app.models.conversation import Conversation, ConversationPOST, ConversationPUT, ConversationFull
 from app.models.responses import (
     CreatedResponse,
     InternalServerError,
@@ -61,6 +61,20 @@ async def update_conversation(conversation_id: str, conversation_put: Conversati
     except Exception as e:
         raise InternalServerError()
 
+
+@router.get("/{conversation_id}", response_model=ConversationFull)
+async def get_conversation(conversation_id: str):
+    """
+    Retrieve a conversation by ID.
+    """
+    try:
+        conversation = await Conversation.get(conversation_id)
+        if not conversation:
+            raise NotFoundError()
+
+        return conversation.messages
+    except Exception as e:
+        raise InternalServerError()
 
 @router.delete("/{conversation_id}", response_model=DeletedResponse)
 async def delete_conversation(conversation_id: str):
