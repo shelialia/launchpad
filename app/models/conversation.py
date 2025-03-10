@@ -81,3 +81,15 @@ class ConversationPUT(BaseModel):
     params: Optional[Dict[str, str]] = Field(
         None, description="Updated model parameters"
     )
+
+    @field_validator("params")
+    def validate_params(cls, value):
+        """Ensure only valid OpenAI parameters are passed."""
+        allowed_params = {"temperature", "max_tokens", "top_p"}
+
+        if value:
+            for param in value:
+                if param not in allowed_params:
+                    raise InvalidParametersError(details={"invalid_param": param})
+
+        return value
