@@ -190,7 +190,7 @@ Example Response:
 DELETE /conversations/{conversation_id}
 ```
 
-📍 **Send a Prompt to LLM**
+### **6️⃣ Send a Prompt to LLM**
 ```http
 POST /conversations/{conversation_id}
 ```
